@@ -46,6 +46,8 @@ Um gerenciador simples e funcional de tarefas desenvolvido com [Laravel 12](http
 - git clone https://github.com/seu-usuario/Lista-de-tarefas-usando-Laravel.git
 - cd Lista-de-tarefas-usando-Laravel
 
+---
+
 ### Instalar dependências
 
 - composer install
