@@ -39,64 +39,84 @@ Um gerenciador simples e funcional de tarefas desenvolvido com [Laravel 12](http
 - Node.js e NPM
 - SQLite
 
+---
+
 ### 🧪 Clonar o projeto
 
-git clone https://github.com/seu-usuario/Lista-de-tarefas-usando-Laravel.git
-cd Lista-de-tarefas-usando-Laravel
+- git clone https://github.com/seu-usuario/Lista-de-tarefas-usando-Laravel.git
+- cd Lista-de-tarefas-usando-Laravel
 
 ### Instalar dependências
 
-composer install
-npm install
+- composer install
+- npm install
+
+---
 
 ### ⚙️ Configurar ambiente
 
-cp .env.example .env
-php artisan key:generate
-touch database/database.sqlite
-php artisan migrate
+- cp .env.example .env
+- php artisan key:generate
+- touch database/database.sqlite
+- php artisan migrate
+
+---
 
 ### Verifique se .env contém:
 
-DB_CONNECTION=sqlite
-DB_DATABASE=${PWD}/database/database.sqlite
+- DB_CONNECTION=sqlite
+- DB_DATABASE=${PWD}/database/database.sqlite
+
+---
 
 ### ▶️ Rodar o projeto
 
-php artisan serve
-Acesse: http://localhost:8000
+- php artisan serve
+- Acesse: http://localhost:8000
+
+---
 
 ### 🧪 Rodar testes
 
-php artisan test
+- php artisan test
+
+---
 
 ### 📁 Estrutura de diretórios
 
-app/ – Código da aplicação
+- app/ – Código da aplicação
 
-routes/web.php – Rotas da aplicação
+- routes/web.php – Rotas da aplicação
 
-resources/views/ – Templates Blade
+- resources/views/ – Templates Blade
 
-database/ – Migrations, seeders e banco SQLite
+- database/ – Migrations, seeders e banco SQLite
 
-tests/ – Testes automatizados
+- tests/ – Testes automatizados
+
+---
 
 ### 📌 Observações
 
-O projeto usa SQLite por simplicidade. Pode ser facilmente adaptado para MySQL ou PostgreSQL.
+- O projeto usa SQLite por simplicidade. Pode ser facilmente adaptado para MySQL ou PostgreSQL.
 
-O deploy pode ser feito em serviços como Render ou Railway.
+- O deploy pode ser feito em serviços como Render ou Railway.
+
+---
 
 ### 📄 Licença
 
-Este projeto está licenciado sob a MIT License.
+- Este projeto está licenciado sob a MIT License.
+
+---
 
 ### 🤝 Contribuição
 
-Pull requests são bem-vindos! Sinta-se à vontade para abrir issues e sugerir melhorias.
+- Pull requests são bem-vindos! Sinta-se à vontade para abrir issues e sugerir melhorias.
+
+---
 
 ### 👨‍💻 Autor
 
-Desenvolvido por Claiton José Clemes
-GitHub: @Claitonjc
+- Desenvolvido por Claiton José Clemes
+- GitHub: @Claitonjc
