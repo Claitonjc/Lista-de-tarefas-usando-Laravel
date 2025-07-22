@@ -1,16 +1,9 @@
 services:
   - type: web
     name: lista-de-tarefas
-    env: php
+    env: docker
     plan: free
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php artisan config:clear
-      php artisan event:cache
-      mkdir -p database
-      touch database/database.sqlite
-      php artisan migrate --force
-    startCommand: php artisan serve --host 0.0.0.0 --port 10000
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_ENV
         value: production
@@ -22,4 +15,5 @@ services:
         value: sqlite
       - key: DB_DATABASE
         value: /opt/render/project/src/database/database.sqlite
+
 
