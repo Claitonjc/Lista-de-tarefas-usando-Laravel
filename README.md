@@ -44,33 +44,33 @@ Um gerenciador simples e funcional de tarefas desenvolvido com [Laravel 12](http
 git clone https://github.com/seu-usuario/Lista-de-tarefas-usando-Laravel.git
 cd Lista-de-tarefas-usando-Laravel
 
-Instalar dependências
+### Instalar dependências
 
 composer install
 npm install
 
-⚙️ Configurar ambiente
+### ⚙️ Configurar ambiente
 
 cp .env.example .env
 php artisan key:generate
 touch database/database.sqlite
 php artisan migrate
 
-Verifique se .env contém:
+### Verifique se .env contém:
 
 DB_CONNECTION=sqlite
 DB_DATABASE=${PWD}/database/database.sqlite
 
-▶️ Rodar o projeto
+### ▶️ Rodar o projeto
 
 php artisan serve
 Acesse: http://localhost:8000
 
-🧪 Rodar testes
+### 🧪 Rodar testes
 
 php artisan test
 
-📁 Estrutura de diretórios
+### 📁 Estrutura de diretórios
 
 app/ – Código da aplicação
 
@@ -82,21 +82,21 @@ database/ – Migrations, seeders e banco SQLite
 
 tests/ – Testes automatizados
 
-📌 Observações
+### 📌 Observações
 
 O projeto usa SQLite por simplicidade. Pode ser facilmente adaptado para MySQL ou PostgreSQL.
 
 O deploy pode ser feito em serviços como Render ou Railway.
 
-📄 Licença
+### 📄 Licença
 
 Este projeto está licenciado sob a MIT License.
 
-🤝 Contribuição
+### 🤝 Contribuição
 
 Pull requests são bem-vindos! Sinta-se à vontade para abrir issues e sugerir melhorias.
 
-👨‍💻 Autor
+### 👨‍💻 Autor
 
 Desenvolvido por Claiton José Clemes
 GitHub: @Claitonjc
