@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: lista-de-tarefas
+    env: php
+    plan: free
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan config:clear
+      php artisan event:cache
+    startCommand: php artisan serve --host 0.0.0.0 --port 10000
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /opt/render/project/src/database/database.sqlite
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      mkdir -p database
+      touch database/database.sqlite
+      php artisan migrate --force
