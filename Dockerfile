@@ -8,11 +8,8 @@ RUN apt-get update && apt-get install -y \
 # Instala extensões PHP necessárias
 RUN docker-php-ext-install pdo pdo_sqlite bcmath mbstring zip xml curl
 
-# Habilita mod_rewrite do Apache (Laravel precisa)
-RUN a2enmod rewrite
-
-# Adiciona o diretório como "safe" para o Git
-RUN git config --global --add safe.directory /var/www/html
+# Instala Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Define diretório de trabalho
 WORKDIR /var/www/html
@@ -20,13 +17,19 @@ WORKDIR /var/www/html
 # Copia projeto
 COPY . .
 
-# Instala Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Adiciona o repositório como seguro (evita erro do Git no container)
+RUN git config --global --add safe.directory /var/www/html
 
-# Instala dependências
+# Instala dependências do Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Cria banco SQLite e garante permissões
+# Corrige o DocumentRoot para a pasta public/
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
+# Ativa o mod_rewrite do Apache (necessário pro Laravel)
+RUN a2enmod rewrite
+
+# Cria banco SQLite e define permissões
 RUN mkdir -p database && touch database/database.sqlite
 RUN chown -R www-data:www-data storage bootstrap/cache database
 RUN chmod -R 775 storage bootstrap/cache database
