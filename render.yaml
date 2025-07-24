@@ -14,6 +14,14 @@ services:
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
-        value: /opt/render/project/src/database/database.sqlite
+        value: /var/www/html/database/database.sqlite
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan config:clear
+      php artisan config:cache
+      mkdir -p database
+      touch database/database.sqlite
+      php artisan migrate --force
+
 
 
