@@ -15,6 +15,11 @@ services:
         value: sqlite
       - key: DB_DATABASE
         value: /var/www/html/database/database.sqlite
+    startCommand: |
+      php artisan config:clear
+      php artisan config:cache
+      php artisan migrate:fresh --force
+      apache2-foreground
 
 
 

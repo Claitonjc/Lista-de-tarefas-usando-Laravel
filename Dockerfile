@@ -20,10 +20,7 @@ COPY . .
 # Adiciona repositório Git como seguro
 RUN git config --global --add safe.directory /var/www/html
 
-# Garante que .env existe
-RUN cp .env.example .env || true
-
-# Corrige o DocumentRoot para a pasta public/
+# Corrige DocumentRoot para /public
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
 # Ativa mod_rewrite (necessário pro Laravel)
@@ -32,16 +29,10 @@ RUN a2enmod rewrite
 # Instala dependências do Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Cria o banco e define permissões
+# Cria diretórios e banco SQLite (vazio)
 RUN mkdir -p database && touch database/database.sqlite
 RUN chown -R www-data:www-data storage bootstrap/cache database
 RUN chmod -R 775 storage bootstrap/cache database
-
-# Gera chave da aplicação
-RUN php artisan key:generate
-
-# Apaga as tabelas e recria com as migrations
-RUN php artisan migrate:fresh --force
 
 EXPOSE 80
 
