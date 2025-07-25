@@ -4,20 +4,18 @@ services:
     env: docker
     plan: free
     dockerfilePath: ./Dockerfile
-
     envVars:
       - key: APP_ENV
-        value: production  # Use 'production' para ambiente de deploy
+        value: production
       - key: APP_DEBUG
-        value: true         # Mantenha 'true' temporariamente para ver erros
+        value: false
       - key: APP_KEY
         generateValue: true
-      - key: LOG_CHANNEL
-        value: stderr
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
         value: /var/www/html/database/database.sqlite
+
 
 
 

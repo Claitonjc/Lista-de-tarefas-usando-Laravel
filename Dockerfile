@@ -14,38 +14,34 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Define diretório de trabalho
 WORKDIR /var/www/html
 
-# Copia os arquivos do projeto
+# Copia arquivos do projeto
 COPY . .
 
-# Adiciona repositório como seguro (git)
+# Adiciona repositório Git como seguro
 RUN git config --global --add safe.directory /var/www/html
 
-# Cria banco SQLite
-RUN mkdir -p database && touch database/database.sqlite
-
-# Permissões
-RUN chown -R www-data:www-data storage bootstrap/cache database
-RUN chmod -R 775 storage bootstrap/cache database
+# Garante que .env existe
+RUN cp .env.example .env || true
 
 # Corrige o DocumentRoot para a pasta public/
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-# Ativa o mod_rewrite do Apache
+# Ativa mod_rewrite (necessário pro Laravel)
 RUN a2enmod rewrite
 
-# Instala dependências
+# Instala dependências do Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Agora sim pode rodar comandos Artisan
-RUN php artisan config:clear
-RUN php artisan config:cache
-RUN php artisan migrate --force || true
+# Cria o banco e define permissões
+RUN mkdir -p database && touch database/database.sqlite
+RUN chown -R www-data:www-data storage bootstrap/cache database
+RUN chmod -R 775 storage bootstrap/cache database
 
-# Gera a chave da aplicação apenas se precisar (Render geralmente fornece via APP_KEY)
-RUN php artisan key:generate || true
+# Gera chave da aplicação
+RUN php artisan key:generate
 
-# Roda as migrations
-RUN php artisan migrate --force || true
+# Apaga as tabelas e recria com as migrations
+RUN php artisan migrate:fresh --force
 
 EXPOSE 80
 
