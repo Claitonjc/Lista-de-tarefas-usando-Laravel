@@ -6,11 +6,13 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_ENV
-        value: production
+        value: local
       - key: APP_DEBUG
         value: false
       - key: APP_KEY
         generateValue: true
+      - key: APP_LOG_LEVEL
+        value: debug
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
