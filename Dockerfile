@@ -17,32 +17,32 @@ WORKDIR /var/www/html
 # Copia os arquivos do projeto
 COPY . .
 
-# Adiciona o repositório como seguro (evita erro do Git no container)
+# Limpa o cache de configuração
+RUN php artisan config:clear
+
+# Adiciona repositório como seguro (git)
 RUN git config --global --add safe.directory /var/www/html
 
 # Cria banco SQLite
 RUN mkdir -p database && touch database/database.sqlite
 
-# Permissões para diretórios importantes
+# Permissões
 RUN chown -R www-data:www-data storage bootstrap/cache database
 RUN chmod -R 775 storage bootstrap/cache database
 
 # Corrige o DocumentRoot para a pasta public/
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-# Ativa o mod_rewrite do Apache (necessário pro Laravel)
+# Ativa o mod_rewrite do Apache
 RUN a2enmod rewrite
 
-# Garante que o .env existe
-RUN cp .env.example .env || true
-
-# Instala dependências do Laravel
+# Instala dependências
 RUN composer install --no-dev --optimize-autoloader
 
-# Gera chave da aplicação (caso não venha do Render)
+# Gera a chave da aplicação apenas se precisar (Render geralmente fornece via APP_KEY)
 RUN php artisan key:generate || true
 
-# Roda as migrations (se o banco estiver preparado)
+# Roda as migrations
 RUN php artisan migrate --force || true
 
 EXPOSE 80
