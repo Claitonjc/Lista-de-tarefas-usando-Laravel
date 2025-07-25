@@ -22,6 +22,7 @@ RUN git config --global --add safe.directory /var/www/html
 
 # Instala dependências do Laravel
 RUN composer install --no-dev --optimize-autoloader
+RUN php artisan migrate --force
 
 # Corrige o DocumentRoot para a pasta public/
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf

@@ -21,9 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/debug-error', function () {
-    // Força um erro
-    abort(500, 'Erro de teste');
+Route::get('/debug', function () {
+    phpinfo(); // ou: return response()->json(['ok' => true]);
 });
 
 
