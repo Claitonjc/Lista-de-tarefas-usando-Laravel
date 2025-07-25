@@ -16,6 +16,8 @@ services:
       - key: DB_DATABASE
         value: /var/www/html/database/database.sqlite
     startCommand: |
+      rm -f database/database.sqlite
+      touch database/database.sqlite
       php artisan config:clear
       php artisan config:cache
       php artisan migrate:fresh --force
