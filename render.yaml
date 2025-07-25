@@ -4,26 +4,20 @@ services:
     env: docker
     plan: free
     dockerfilePath: ./Dockerfile
+
     envVars:
       - key: APP_ENV
-        value: local
+        value: production  # Use 'production' para ambiente de deploy
       - key: APP_DEBUG
-        value: false
+        value: true         # Mantenha 'true' temporariamente para ver erros
       - key: APP_KEY
         generateValue: true
-      - key: APP_LOG_LEVEL
-        value: debug
+      - key: LOG_CHANNEL
+        value: stderr
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
         value: /var/www/html/database/database.sqlite
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php artisan config:clear
-      php artisan config:cache
-      mkdir -p database
-      touch database/database.sqlite
-      php artisan migrate --force
 
 
 
