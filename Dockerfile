@@ -17,9 +17,6 @@ WORKDIR /var/www/html
 # Copia os arquivos do projeto
 COPY . .
 
-# Limpa o cache de configuração
-RUN php artisan config:clear
-
 # Adiciona repositório como seguro (git)
 RUN git config --global --add safe.directory /var/www/html
 
@@ -38,6 +35,11 @@ RUN a2enmod rewrite
 
 # Instala dependências
 RUN composer install --no-dev --optimize-autoloader
+
+# Agora sim pode rodar comandos Artisan
+RUN php artisan config:clear
+RUN php artisan config:cache
+RUN php artisan migrate --force || true
 
 # Gera a chave da aplicação apenas se precisar (Render geralmente fornece via APP_KEY)
 RUN php artisan key:generate || true
